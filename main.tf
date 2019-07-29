@@ -34,6 +34,7 @@ resource "kubernetes_service_account" "this" {
       k8s-app = "kubernetes-dashboard"
     }
   }
+  automount_service_account_token = true
 }
 
 # kind: Role
@@ -220,6 +221,7 @@ resource "kubernetes_deployment" "this" {
     }
     template {
       metadata {
+        namespace = "kube-system"
         labels = {
           k8s-app = "kubernetes-dashboard"
         }
