@@ -11,7 +11,7 @@ resource "kubernetes_secret" "this" {
   metadata {
     name = "kubernetes-dashboard-certs"
     namespace = "kube-system"
-    labels = {
+    labels {
        k8s-app = "kubernetes-dashboard"
     }
   }
@@ -30,7 +30,7 @@ resource "kubernetes_service_account" "this" {
   metadata {
     name = "kubernetes-dashboard"
     namespace = "kube-system"
-    labels = {
+    labels {
       k8s-app = "kubernetes-dashboard"
     }
   }
@@ -82,7 +82,7 @@ resource "kubernetes_role" "this" {
     resources      = ["secrets"]
     verbs          = ["create"]
   }
-  rule = {
+  rule {
     # Allow Dashboard to create 'kubernetes-dashboard-settings' config map.
     api_groups = [""]
     resources  = ["configmaps"]
@@ -208,7 +208,7 @@ resource "kubernetes_deployment" "this" {
   metadata {
     name = "kubernetes-dashboard"
     namespace = "kube-system"
-    labels = {
+    labels {
       k8s-app = "kubernetes-dashboard"
     }
   }
@@ -216,14 +216,14 @@ resource "kubernetes_deployment" "this" {
     replicas = 1
     revision_history_limit = 10
     selector {
-      match_labels = {
+      match_labels {
         k8s-app = "kubernetes-dashboard"
       }
     }
     template {
       metadata {
         namespace = "kube-system"
-        labels = {
+        labels {
           k8s-app = "kubernetes-dashboard"
         }
       }
@@ -236,6 +236,12 @@ resource "kubernetes_deployment" "this" {
             protocol = "TCP"
           }
           args = ["--auto-generate-certificates",]
+
+          volume_mount {
+            name = "${kubernetes_service_account.this.default_secret_name}"
+            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount"
+            read_only = true
+          }
           volume_mount {
             name = "kubernetes-dashboard-certs"
             mount_path = "/certs"
@@ -252,6 +258,12 @@ resource "kubernetes_deployment" "this" {
             }
             initial_delay_seconds = 30
             timeout_seconds       = 30
+          }
+        }
+        volume {
+          name = "${kubernetes_service_account.this.default_secret_name}"
+          secret {
+            secret_name = "${kubernetes_service_account.this.default_secret_name}"
           }
         }
         volume {
@@ -288,12 +300,12 @@ resource "kubernetes_service" "this" {
   metadata {
     name = "kubernetes-dashboard"
     namespace = "kube-system"
-    labels = {
+    labels {
       k8s-app = "kubernetes-dashboard"
     }
   }
   spec {
-    selector = {
+    selector {
       k8s-app = "kubernetes-dashboard"
     }
     port {
