@@ -232,7 +232,7 @@ resource "kubernetes_deployment" "this" {
           image = "k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1"
           name  = "kubernetes-dashboard"
           port {
-            container_port = 9090
+            container_port = 8443
             protocol = "TCP"
           }
           args = ["--auto-generate-certificates",]
@@ -297,8 +297,8 @@ resource "kubernetes_service" "this" {
       k8s-app = "kubernetes-dashboard"
     }
     port {
-      port        = 9090
-      target_port = 9090
+      port        = 443
+      target_port = 8443
     }
     type = "ClusterIP"
   }
