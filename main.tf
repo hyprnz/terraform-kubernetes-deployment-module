@@ -91,7 +91,7 @@ resource "kubernetes_role" "this" {
   rule {
     # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
     api_groups = [""]
-    resources  = ["configmaps"]
+    resources  = ["secrets"]
     resource_names = ["kubernetes-dashboard-key-holder", "kubernetes-dashboard-certs"]
     verbs      = ["get", "update", "delete"]
   }
@@ -100,7 +100,7 @@ resource "kubernetes_role" "this" {
     api_groups = [""]
     resources = ["configmaps"]
     resource_names  = ["kubernetes-dashboard-settings"]
-    verbs      = ["create"]
+    verbs      = ["get", "update"]
   }
   rule {
     # Allow Dashboard to get metrics from heapster.
@@ -145,6 +145,7 @@ resource "kubernetes_role_binding" "this" {
     kind      = "ServiceAccount"
     name      = "kubernetes-dashboard"
     namespace = "kube-system"
+    api_group = ""
   }
 }
 
@@ -231,10 +232,10 @@ resource "kubernetes_deployment" "this" {
           image = "k8s.gcr.io/kubernetes-dashboard-amd64:v1.10.1"
           name  = "kubernetes-dashboard"
           port {
-            container_port = 8443
+            container_port = 9090
             protocol = "TCP"
           }
-          args = ["--auto-generate-certificates"]
+          args = ["--auto-generate-certificates",]
           volume_mount {
             name = "kubernetes-dashboard-certs"
             mount_path = "/certs"
@@ -296,8 +297,8 @@ resource "kubernetes_service" "this" {
       k8s-app = "kubernetes-dashboard"
     }
     port {
-      port        = 443
-      target_port = 8443
+      port        = 9090
+      target_port = 9090
     }
     type = "ClusterIP"
   }
