@@ -4,7 +4,7 @@ resource "kubernetes_secret" "this" {
     name = "${var.app_name}-certs"
     namespace = "kube-system"
     labels {
-       k8s-app = "kubernetes-dashboard"
+       k8s-app = "${var.app_name}"
     }
   }
   type = "Opaque"
@@ -15,7 +15,7 @@ resource "kubernetes_service_account" "this" {
     name = "${var.app_name}"
     namespace = "kube-system"
     labels {
-      k8s-app = "kubernetes-dashboard"
+      k8s-app = "${var.app_name}"
     }
   }
   automount_service_account_token = true
@@ -85,7 +85,7 @@ resource "kubernetes_deployment" "this" {
     name = "${var.app_name}"
     namespace = "kube-system"
     labels {
-      k8s-app = "kubernetes-dashboard"
+      k8s-app = "${var.app_name}"
     }
   }
   spec {
@@ -93,14 +93,14 @@ resource "kubernetes_deployment" "this" {
     revision_history_limit = 10
     selector {
       match_labels {
-        k8s-app = "kubernetes-dashboard"
+        k8s-app = "${var.app_name}"
       }
     }
     template {
       metadata {
         namespace = "kube-system"
         labels {
-          k8s-app = "kubernetes-dashboard"
+          k8s-app = "${var.app_name}"
         }
       }
       spec {
@@ -163,12 +163,12 @@ resource "kubernetes_service" "this" {
     name = "${var.app_name}"
     namespace = "kube-system"
     labels {
-      k8s-app = "kubernetes-dashboard"
+      k8s-app = "${var.app_name}"
     }
   }
   spec {
     selector {
-      k8s-app = "kubernetes-dashboard"
+      k8s-app = "${var.app_name}"
     }
     port {
       port        = 443
