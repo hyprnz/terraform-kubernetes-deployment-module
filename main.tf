@@ -1,7 +1,7 @@
 
 resource "kubernetes_secret" "this" {
   metadata {
-    name = "kubernetes-dashboard-certs"
+    name = "${var.app_name}-certs"
     namespace = "kube-system"
     labels {
        k8s-app = "kubernetes-dashboard"
@@ -12,7 +12,7 @@ resource "kubernetes_secret" "this" {
 
 resource "kubernetes_service_account" "this" {
   metadata {
-    name = "kubernetes-dashboard"
+    name = "${var.app_name}"
     namespace = "kube-system"
     labels {
       k8s-app = "kubernetes-dashboard"
@@ -82,7 +82,7 @@ resource "kubernetes_role_binding" "this" {
 
 resource "kubernetes_deployment" "this" {
   metadata {
-    name = "kubernetes-dashboard"
+    name = "${var.app_name}"
     namespace = "kube-system"
     labels {
       k8s-app = "kubernetes-dashboard"
@@ -152,7 +152,7 @@ resource "kubernetes_deployment" "this" {
           name = "tmp-volume"
           empty_dir = [{}]
         }
-        service_account_name = "kubernetes-dashboard"
+        service_account_name = "${var.app_name}"
       }
     }
   }
@@ -160,7 +160,7 @@ resource "kubernetes_deployment" "this" {
 
 resource "kubernetes_service" "this" {
   metadata {
-    name = "kubernetes-dashboard"
+    name = "${var.app_name}"
     namespace = "kube-system"
     labels {
       k8s-app = "kubernetes-dashboard"
