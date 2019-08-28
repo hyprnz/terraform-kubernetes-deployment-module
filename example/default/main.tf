@@ -1,6 +1,7 @@
 module "example" {
   source = "../../"
 
-  eks_cluster_name = "eks-uat-jarden"
-  app_name = "kubernetes-dashboard"
+  eks_cluster_name  = "eks-uat-jarden"
+  app_name          = "kubernetes-dashboard"
+  namespace         = "kube-system"
 }

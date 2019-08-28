@@ -3,6 +3,11 @@ variable "eks_cluster_name" {
 }
 
 variable "app_name" {
-  description = "The name of the Kubernetes application"
+  description = "The name of the Kubernetes deployment"
 }
+
+variable "namespace" {
+  description = "The namespace of the Kubernetes deployment "
+}
+
 

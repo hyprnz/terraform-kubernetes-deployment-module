@@ -2,7 +2,7 @@
 resource "kubernetes_secret" "this" {
   metadata {
     name = "${var.app_name}-certs"
-    namespace = "kube-system"
+    namespace = "${var.namespace}"
     labels {
        k8s-app = "${var.app_name}"
     }
@@ -13,7 +13,7 @@ resource "kubernetes_secret" "this" {
 resource "kubernetes_service_account" "this" {
   metadata {
     name = "${var.app_name}"
-    namespace = "kube-system"
+    namespace = "${var.namespace}"
     labels {
       k8s-app = "${var.app_name}"
     }
@@ -24,7 +24,7 @@ resource "kubernetes_service_account" "this" {
 resource "kubernetes_role" "this" {
   metadata {
     name = "kubernetes-dashboard-minimal"
-    namespace = "kube-system"
+    namespace = "${var.namespace}"
   }
   rule {
     api_groups     = [""]
@@ -65,7 +65,7 @@ resource "kubernetes_role" "this" {
 resource "kubernetes_role_binding" "this" {
   metadata {
     name      = "kubernetes-dashboard-minimal"
-    namespace = "kube-system"
+    namespace = "${var.namespace}"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -75,7 +75,7 @@ resource "kubernetes_role_binding" "this" {
   subject {
     kind      = "ServiceAccount"
     name      = "kubernetes-dashboard"
-    namespace = "kube-system"
+    namespace = "${var.namespace}"
     api_group = ""
   }
 }
@@ -83,7 +83,7 @@ resource "kubernetes_role_binding" "this" {
 resource "kubernetes_deployment" "this" {
   metadata {
     name = "${var.app_name}"
-    namespace = "kube-system"
+    namespace = "${var.namespace}"
     labels {
       k8s-app = "${var.app_name}"
     }
@@ -98,7 +98,7 @@ resource "kubernetes_deployment" "this" {
     }
     template {
       metadata {
-        namespace = "kube-system"
+        namespace = "${var.namespace}"
         labels {
           k8s-app = "${var.app_name}"
         }
@@ -161,7 +161,7 @@ resource "kubernetes_deployment" "this" {
 resource "kubernetes_service" "this" {
   metadata {
     name = "${var.app_name}"
-    namespace = "kube-system"
+    namespace = "${var.namespace}"
     labels {
       k8s-app = "${var.app_name}"
     }
