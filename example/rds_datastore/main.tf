@@ -1,8 +1,8 @@
 module "example" {
   source = "../../"
 
-  eks_cluster_name  = "eks-stage-example"
-  app_name          = "example-service"
+  eks_cluster_name = "eks-stage-example"
+  app_name         = "example-service"
 
   enable_datastore_module = true
   enable_rds              = true

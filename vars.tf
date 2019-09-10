@@ -12,17 +12,17 @@ variable "namespace" {
 }
 
 variable "enable_datastore_module" {
-  description = "Enables the data store module that can provsion data storage resources"
+  description = "Enables the data store module that can provision data storage resources"
   default     = false
 }
 
 variable "enable_rds" {
-  description = "Controls if an RDS instance should be provisoned and integrated with the service."
+  description = "Controls if an RDS instance should be provisioned and integrated with the service."
   default     = false
 }
 
 variable "rds_dbname" {
-  description = "The rds databse name. Can only contain alphanumeric characters"
+  description = "The rds database name. Can only contain alphanumeric characters"
   default     = ""
 }
 

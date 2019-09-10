@@ -13,9 +13,9 @@ module "service_datastore" {
   rds_subnet_group       = "${var.rds_subnet_group}"
   rds_security_group_ids = "${var.rds_security_group_ids}"
 
-  rds_storage_encrypted               = "${var.rds_enable_storage_encryption}"
-  rds_storage_encryption_kms_key_arn  = "${var.rds_storage_encryption_kms_key_arn}"
+  rds_storage_encrypted              = "${var.rds_enable_storage_encryption}"
+  rds_storage_encryption_kms_key_arn = "${var.rds_storage_encryption_kms_key_arn}"
 
-  rds_tags  = "${var.rds_tags}"
-  tags      = "${merge(map("Service",format("%s", var.app_name)),var.datastore_tags)}"
+  rds_tags = "${var.rds_tags}"
+  tags     = "${merge(map("Service",format("%s", var.app_name)),var.datastore_tags)}"
 }
