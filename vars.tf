@@ -8,6 +8,7 @@ variable "app_name" {
 
 variable "namespace" {
   description = "The namespace of the Kubernetes resources"
+  default     = "default"
 }
 
 variable "enable_datastore_module" {
@@ -47,13 +48,12 @@ variable "rds_engine_version" {
 
 variable "rds_instance_class" {
   description = "The instance type to use"
+  default     = "db.t3.small"
 }
 
 variable "rds_subnet_group" {
   description = "Subnet group for RDS instances"
   default     = ""
-  type        = "list"
-  default     = []
 }
 
 variable "rds_security_group_ids" {

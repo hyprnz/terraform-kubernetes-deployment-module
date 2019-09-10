@@ -15,10 +15,10 @@ output "datastore_rds_instance_endpoint" {
 
 output "datastore_rds_instance_id" {
   description = "The RDS instance ID"
-  value       = "${module.service_datastore.rds_instance_id.}"
+  value       = "${module.service_datastore.rds_instance_id}"
 }
 
-output "datastore_rds_instance_id" {
+output "datastore_rds_db_user" {
   description = "The RDS instance ID"
-  value       = "${module.service_datastore.rds_db_user.}"
+  value       = "${module.service_datastore.rds_db_user}"
 }
