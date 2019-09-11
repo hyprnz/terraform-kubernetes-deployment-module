@@ -2,7 +2,6 @@ provider "aws" {
   version = "~> 2.19"
 }
 
-
 data "aws_eks_cluster" "this" {
   name = "${var.eks_cluster_name}"
 }

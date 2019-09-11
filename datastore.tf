@@ -1,6 +1,9 @@
 module "service_datastore" {
   source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=0.1.3"
-  providers = {aws = "aws"}
+
+  providers = {
+    aws = "aws"
+  }
 
   enable_datastore    = "${var.enable_datastore_module}"
   create_rds_instance = "${var.enable_rds}"

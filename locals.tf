@@ -1,5 +1,5 @@
 locals {
-    ##
+  ##
   # Kubeconfig
   ##
   kubeconfig = <<KUBECONFIG

@@ -1,6 +1,6 @@
 output "cluster_config" {
   description = "Kube config file of the current cluster"
-  value = "${local.kubeconfig}"
+  value       = "${local.kubeconfig}"
 }
 
 output "datastore_rds_instance_address" {
