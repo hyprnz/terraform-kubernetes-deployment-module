@@ -40,6 +40,7 @@ The secret has 4 key value pairs
 
 | Name | Description |
 |------|-------------|
+| datastore\_rds\_db\_name | The RDS database name |
 | datastore\_rds\_db\_user | The RDS instance ID |
 | datastore\_rds\_instance\_address | The address of the RDS instance |
 | datastore\_rds\_instance\_arn | The ARN of the RDS instance |

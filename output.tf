@@ -22,3 +22,8 @@ output "datastore_rds_db_user" {
   description = "The RDS instance ID"
   value       = "${module.service_datastore.rds_db_user}"
 }
+
+output "datastore_rds_db_name" {
+  description = "The RDS database name"
+  value       = "${module.service_datastore.rds_db_name}"
+}
