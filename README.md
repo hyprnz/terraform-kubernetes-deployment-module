@@ -4,7 +4,15 @@ This module intends to create both AWS and Kubernetes resources for a Kubernetes
 
 Current this module can create a RDS instance and store the database parameters in a Kubernetes secret.
 
-The name of the secret is defined by appending `-db` to the `app_name` variable.
+The name of the secret is defined by appending `-db` to the `app_name` variable, i.e. if `app_name`
+has the value of `foo-service`, the Kubernetes secret will be named `foo-service-db`
+
+The secret has 4 key value pairs
+
+1. username - user of the RDS instance
+1. password - users password
+1. dbname - the database name
+1. endpoint - the endpoint of the RDS instance
 
 ## Inputs
 
