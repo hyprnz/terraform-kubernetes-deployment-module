@@ -13,6 +13,7 @@ resource "kubernetes_secret" "db" {
   data = {
     username = "${module.service_datastore.rds_db_user[0]}"
     password = "${var.rds_password}"
+    dbname   = "${module.service_datastore.rds_db_name[0]}"
     endpoint = "${module.service_datastore.rds_instance_endpoint[0]}"
   }
 
