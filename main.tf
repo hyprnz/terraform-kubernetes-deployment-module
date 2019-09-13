@@ -15,6 +15,7 @@ resource "kubernetes_secret" "db" {
     password = "${var.rds_password}"
     dbname   = "${module.service_datastore.rds_db_name[0]}"
     endpoint = "${module.service_datastore.rds_instance_endpoint[0]}"
+    url      = "${module.service_datastore.rds_db_url}"
   }
 
   type = "Opaque"

@@ -32,3 +32,9 @@ output "datastore_rds_db_name" {
   description = "The RDS database name"
   value       = "${module.service_datastore.rds_db_name}"
 }
+
+output "datastore_rds_db_url" {
+  description = "The RDS connection url in the format of `engine`://`user`:`password`@`endpoint`/`db_name`"
+  value = "${module.service_datastore.rds_db_url}"
+}
+
