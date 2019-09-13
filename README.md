@@ -12,7 +12,8 @@ The secret has 4 key value pairs
 1. username - user of the RDS instance
 1. password - users password
 1. dbname - the database name
-1. endpoint - the endpoint of the RDS instance
+1. endpoint - the endpoint of the RDS instance (includes port number)
+1. url - the connection url to the RDS database
 
 ## Inputs
 
@@ -42,6 +43,7 @@ The secret has 4 key value pairs
 |------|-------------|
 | cluster\_config | Kube config file of the current cluster |
 | datastore\_rds\_db\_name | The RDS database name |
+| datastore\_rds\_db\_url | The RDS connection url in the format of `engine`://`user`:`password`@`endpoint`/`db_name` |
 | datastore\_rds\_db\_user | The RDS instance ID |
 | datastore\_rds\_instance\_address | The address of the RDS instance |
 | datastore\_rds\_instance\_arn | The ARN of the RDS instance |
