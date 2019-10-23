@@ -5,16 +5,9 @@ module "example" {
   }
 
   eks_cluster_name = "eks-stage-example"
-  app_name         = "example-service"
+  app_name         = "example-service-no-datastore"
 
-  enable_datastore_module = true
-  enable_rds              = true
-  rds_dbname              = "example"
-  rds_identifier          = "example-stage-postgres"
-  rds_password            = "1234567890absDEFghiJKL"
-
-  rds_subnet_group       = "database-stage"
-  rds_security_group_ids = ["sg-0123456789"]
+  enable_datastore_module = false
 }
 
 provider "aws" {
@@ -52,4 +45,3 @@ output "rds_db_name" {
 output "rds_db_url" {
   value       = "${module.example.datastore_rds_db_url}"
 }
-
