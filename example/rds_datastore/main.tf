@@ -1,5 +1,6 @@
 module "example" {
   source = "../../"
+
   providers {
     aws = "aws"
   }
@@ -30,26 +31,25 @@ output "rds_instance_address" {
 }
 
 output "rds_instance_arn" {
-  value       = "${module.example.datastore_rds_instance_arn}"
+  value = "${module.example.datastore_rds_instance_arn}"
 }
 
 output "rds_instance_endpoint" {
-  value       = "${module.example.datastore_rds_instance_endpoint}"
+  value = "${module.example.datastore_rds_instance_endpoint}"
 }
 
 output "rds_instance_id" {
-  value       = "${module.example.datastore_rds_instance_id}"
+  value = "${module.example.datastore_rds_instance_id}"
 }
 
 output "rds_db_user" {
-  value       = "${module.example.datastore_rds_db_user}"
+  value = "${module.example.datastore_rds_db_user}"
 }
 
 output "rds_db_name" {
-  value       = "${module.example.datastore_rds_db_name}"
+  value = "${module.example.datastore_rds_db_name}"
 }
 
 output "rds_db_url" {
-  value       = "${module.example.datastore_rds_db_url}"
+  value = "${module.example.datastore_rds_db_url}"
 }
-
