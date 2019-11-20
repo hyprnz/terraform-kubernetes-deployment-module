@@ -21,8 +21,8 @@ variable "enable_rds" {
   default     = false
 }
 
-variable "rds_dbname" {
-  description = "The rds database name. Can only contain alphanumeric characters"
+variable "data_store_name" {
+  description = "The name for the datastore resources. Should represent the service name. Can only contain alphanumeric characters"
   default     = ""
 }
 
@@ -72,6 +72,26 @@ variable "rds_storage_encryption_kms_key_arn" {
   default     = ""
 }
 
+variable "create_s3_bucket" {
+  description = "Controls if an S3 bucket should be provisioned"
+  default     = false
+}
+
+variable "s3_bucket_namespace" {
+  description = "The namespace of the bucket - intention is to help avoid naming collisions"
+  default     = ""
+}
+
+variable "s3_enable_versioning" {
+  description = "If versioning should be configured on the bucket"
+  default     = true
+}
+
+variable "s3_bucket_K8s_worker_iam_role_arn" {
+  description = "The arn of the Kubernetes worker role that allows a service to assume the role to access the bucket and options"
+  default     = ""
+}
+
 variable "datastore_tags" {
   description = "Additional tags to add to all datastore resources"
   type        = "map"
@@ -81,5 +101,10 @@ variable "datastore_tags" {
 variable "rds_tags" {
   description = "Additional tags for the RDS instance"
   type        = "map"
+  default     = {}
+}
+
+variable "s3_tags" {
+  description = "Additional tags to be added to the s3 resources"
   default     = {}
 }
