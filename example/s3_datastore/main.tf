@@ -14,8 +14,6 @@ module "example" {
   s3_bucket_namespace     = "stage.example.com"
 
   s3_bucket_K8s_worker_iam_role_arn = "arn:aws:iam::012345678912:role/eks-worker-role"
-
-
 }
 
 provider "aws" {

@@ -9,13 +9,13 @@ module "service_datastore" {
   create_rds_instance = "${var.enable_rds}"
   create_s3_bucket    = "${var.create_s3_bucket}"
 
-  name                = "${var.data_store_name}"
+  name = "${var.data_store_name}"
 
-  rds_identifier      = "${var.rds_identifier}"
-  rds_password        = "${var.rds_password}"
-  rds_engine          = "${var.rds_engine}"
-  rds_engine_version  = "${var.rds_engine_version}"
-  rds_instance_class  = "${var.rds_instance_class}"
+  rds_identifier     = "${var.rds_identifier}"
+  rds_password       = "${var.rds_password}"
+  rds_engine         = "${var.rds_engine}"
+  rds_engine_version = "${var.rds_engine_version}"
+  rds_instance_class = "${var.rds_instance_class}"
 
   rds_subnet_group       = "${var.rds_subnet_group}"
   rds_security_group_ids = "${var.rds_security_group_ids}"
