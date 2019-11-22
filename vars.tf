@@ -16,13 +16,13 @@ variable "enable_datastore_module" {
   default     = false
 }
 
-variable "enable_rds" {
-  description = "Controls if an RDS instance should be provisioned and integrated with the service."
+variable "create_rds_instance" {
+  description = "Controls if an RDS instance should be provisioned and integrated with the Kubernetes deployment."
   default     = false
 }
 
-variable "data_store_name" {
-  description = "The name for the datastore resources. Should represent the service name. Can only contain alphanumeric characters"
+variable "rds_database_name" {
+  description = "The database name. Can only contain alphanumeric characters and cannot be a databse reserved word"
   default     = ""
 }
 
@@ -77,6 +77,10 @@ variable "create_s3_bucket" {
   default     = false
 }
 
+variable "s3_bucket_name" {
+ description = "The name of the bucket"
+ default     = ""
+}
 variable "s3_bucket_namespace" {
   description = "The namespace of the bucket - intention is to help avoid naming collisions"
   default     = ""

@@ -1,5 +1,5 @@
 resource "kubernetes_secret" "db" {
-  count = "${var.enable_datastore_module && var.enable_rds ? 1 :0 }"
+  count = "${var.enable_datastore_module && var.create_rds_instance ? 1 :0 }"
 
   metadata {
     name      = "${var.app_name}-db"
