@@ -24,12 +24,12 @@ The secret has 4 key value pairs
 |------|-------------|:----:|:-----:|:-----:|
 | app\_name | The name of the Kubernetes service | string | n/a | yes |
 | eks\_cluster\_name | Name of EKS cluster | string | n/a | yes |
+| create\_rds\_instance | Controls if an RDS instance should be provisioned and integrated with the Kubernetes deployment. | string | `"false"` | no |
 | create\_s3\_bucket | Controls if an S3 bucket should be provisioned | string | `"false"` | no |
-| data\_store\_name | The name for the datastore resources. Should represent the service name. Can only contain alphanumeric characters | string | `""` | no |
 | datastore\_tags | Additional tags to add to all datastore resources | map | `<map>` | no |
 | enable\_datastore\_module | Enables the data store module that can provision data storage resources | string | `"false"` | no |
-| enable\_rds | Controls if an RDS instance should be provisioned and integrated with the service. | string | `"false"` | no |
 | namespace | The namespace of the Kubernetes resources | string | `"default"` | no |
+| rds\_database\_name | The database name. Can only contain alphanumeric characters and cannot be a databse reserved word | string | `""` | no |
 | rds\_enable\_storage\_encryption | Specifies whether the DB instance is encrypted | string | `"false"` | no |
 | rds\_engine | The Database engine for the rds instance | string | `"postgres"` | no |
 | rds\_engine\_version | The version of the database engine | string | `"11.4"` | no |
@@ -41,6 +41,7 @@ The secret has 4 key value pairs
 | rds\_subnet\_group | Subnet group for RDS instances | string | `""` | no |
 | rds\_tags | Additional tags for the RDS instance | map | `<map>` | no |
 | s3\_bucket\_K8s\_worker\_iam\_role\_arn | The arn of the Kubernetes worker role that allows a service to assume the role to access the bucket and options | string | `""` | no |
+| s3\_bucket\_name | The name of the bucket | string | `""` | no |
 | s3\_bucket\_namespace | The namespace of the bucket - intention is to help avoid naming collisions | string | `""` | no |
 | s3\_enable\_versioning | If versioning should be configured on the bucket | string | `"true"` | no |
 | s3\_tags | Additional tags to be added to the s3 resources | map | `<map>` | no |
