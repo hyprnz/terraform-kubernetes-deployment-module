@@ -29,7 +29,7 @@ The secret has 4 key value pairs
 | datastore\_tags | Additional tags to add to all datastore resources | map | `<map>` | no |
 | enable\_datastore\_module | Enables the data store module that can provision data storage resources | string | `"false"` | no |
 | namespace | The namespace of the Kubernetes resources | string | `"default"` | no |
-| rds\_database\_name | The database name. Can only contain alphanumeric characters and cannot be a databse reserved word | string | `""` | no |
+| rds\_database\_name | The database name. Can only contain alphanumeric characters and cannot be a database reserved word | string | `""` | no |
 | rds\_enable\_storage\_encryption | Specifies whether the DB instance is encrypted | string | `"false"` | no |
 | rds\_engine | The Database engine for the rds instance | string | `"postgres"` | no |
 | rds\_engine\_version | The version of the database engine | string | `"11.4"` | no |
@@ -58,4 +58,6 @@ The secret has 4 key value pairs
 | datastore\_rds\_instance\_arn | The ARN of the RDS instance |
 | datastore\_rds\_instance\_endpoint | The connection endpoint |
 | datastore\_rds\_instance\_id | The RDS instance ID |
+| datastore\_s3\_bucket\_name | The name of the s3 bucket |
+| datastore\_s3\_bucket\_role | ${module.service_datastore.s3_bucket_role_name} |
 

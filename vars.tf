@@ -22,7 +22,7 @@ variable "create_rds_instance" {
 }
 
 variable "rds_database_name" {
-  description = "The database name. Can only contain alphanumeric characters and cannot be a databse reserved word"
+  description = "The database name. Can only contain alphanumeric characters and cannot be a database reserved word"
   default     = ""
 }
 
