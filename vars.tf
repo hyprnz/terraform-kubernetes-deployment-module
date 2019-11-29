@@ -14,11 +14,13 @@ variable "namespace" {
 variable "enable_datastore_module" {
   description = "Enables the data store module that can provision data storage resources"
   default     = false
+  type        = bool
 }
 
 variable "enable_rds" {
   description = "Controls if an RDS instance should be provisioned and integrated with the service."
   default     = false
+  type        = bool
 }
 
 variable "rds_dbname" {
@@ -58,7 +60,7 @@ variable "rds_subnet_group" {
 
 variable "rds_security_group_ids" {
   description = "A List of security groups to bind to the rds instance"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -74,12 +76,13 @@ variable "rds_storage_encryption_kms_key_arn" {
 
 variable "datastore_tags" {
   description = "Additional tags to add to all datastore resources"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
 variable "rds_tags" {
   description = "Additional tags for the RDS instance"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
+

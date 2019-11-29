@@ -50,3 +50,5 @@ The secret has 4 key value pairs
 | datastore\_rds\_instance\_endpoint | The connection endpoint |
 | datastore\_rds\_instance\_id | The RDS instance ID |
 
+# Example 
+The example `example/rds_datastore` depends on the example of `terraform-eks-module project` that generates the EKS cluster this example uses. 

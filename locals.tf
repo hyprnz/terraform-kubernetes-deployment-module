@@ -7,7 +7,7 @@ apiVersion: v1
 clusters:
 - cluster:
     server: ${data.aws_eks_cluster.this.endpoint}
-    certificate-authority-data: "${data.aws_eks_cluster.this.certificate_authority.0.data}"
+    certificate-authority-data: "${data.aws_eks_cluster.this.certificate_authority[0].data}"
   name: ${var.eks_cluster_name}
 contexts:
 - context:
@@ -28,4 +28,6 @@ users:
         - "-i"
         - "${var.eks_cluster_name}"
 KUBECONFIG
+
 }
+
