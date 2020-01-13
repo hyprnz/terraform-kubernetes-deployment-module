@@ -38,3 +38,12 @@ output "datastore_rds_db_url" {
   value       = module.service_datastore.rds_db_url
 }
 
+output "datastore_s3_bucket_name" {
+  description = "The name of the s3 bucket"
+  value       = module.service_datastore.s3_bucket
+}
+
+output "datastore_s3_bucket_role" {
+  description = "The role that has access to the bucket"
+  value       = module.service_datastore.s3_bucket_role_name
+}

@@ -1,9 +1,15 @@
 module "service_datastore" {
   source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=1.0.1"
 
+  providers = {
+    aws = aws
+  }
+
   enable_datastore    = var.enable_datastore_module
-  create_rds_instance = var.enable_rds
-  rds_database_name   = var.rds_dbname
+  create_rds_instance = var.create_rds_instance
+  create_s3_bucket    = var.create_s3_bucket
+
+  rds_database_name   = var.rds_database_name
   rds_identifier      = var.rds_identifier
   rds_password        = var.rds_password
   rds_engine          = var.rds_engine
@@ -16,7 +22,13 @@ module "service_datastore" {
   rds_storage_encrypted              = var.rds_enable_storage_encryption
   rds_storage_encryption_kms_key_arn = var.rds_storage_encryption_kms_key_arn
 
+  s3_bucket_name                    = var.s3_bucket_name
+  s3_bucket_namespace               = var.s3_bucket_namespace
+  s3_enable_versioning              = var.s3_enable_versioning
+  s3_bucket_K8s_worker_iam_role_arn = var.s3_bucket_K8s_worker_iam_role_arn
+
   rds_tags = var.rds_tags
+  s3_tags  = var.s3_tags
   tags = merge(
     {
       "Service" = format("%s", var.app_name)
@@ -24,4 +36,3 @@ module "service_datastore" {
     var.datastore_tags,
   )
 }
-
