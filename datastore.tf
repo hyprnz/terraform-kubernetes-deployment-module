@@ -1,5 +1,7 @@
 module "service_datastore" {
-  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=0.1.6"
+  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=0.1.6-01"
+
+
 
   providers = {
     aws = "aws"
@@ -13,6 +15,9 @@ module "service_datastore" {
   rds_engine          = "${var.rds_engine}"
   rds_engine_version  = "${var.rds_engine_version}"
   rds_instance_class  = "${var.rds_instance_class}"
+
+  rds_monitoring_interval = "${var.rds_monitoring_interval}"
+  rds_monitoring_role_arn = "${var.rds_monitoring_role_arn}"
 
   rds_subnet_group       = "${var.rds_subnet_group}"
   rds_security_group_ids = "${var.rds_security_group_ids}"
