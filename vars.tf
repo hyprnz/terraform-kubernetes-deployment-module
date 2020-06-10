@@ -63,6 +63,12 @@ variable "rds_monitoring_role_arn" {
   default     = ""
 }
 
+variable "rds_enable_performance_insights" {
+  description = "Controls the enabling of RDS Performance insights. Default to `true`"
+  type        = bool
+  default     = true
+}
+
 variable "rds_subnet_group" {
   description = "Subnet group for RDS instances"
   default     = ""
@@ -77,6 +83,11 @@ variable "rds_security_group_ids" {
 variable "rds_allocated_storage" {
   description = "Amount of storage allocated to RDS instance"
   default     = 10
+}
+
+variable "rds_max_allocated_storage" {
+  description = "The upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to `allocated_storage`. Must be greater than or equal to `allocated_storage` or `0` to disable Storage Autoscaling."
+  default     = 0
 }
 
 variable "rds_iops" {
