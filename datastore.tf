@@ -9,12 +9,12 @@ module "service_datastore" {
   create_rds_instance = var.create_rds_instance
   create_s3_bucket    = var.create_s3_bucket
 
-  rds_database_name   = var.rds_database_name
-  rds_identifier      = var.rds_identifier
-  rds_password        = var.rds_password
-  rds_engine          = var.rds_engine
-  rds_engine_version  = var.rds_engine_version
-  rds_instance_class  = var.rds_instance_class
+  rds_database_name  = var.rds_database_name
+  rds_identifier     = var.rds_identifier
+  rds_password       = var.rds_password
+  rds_engine         = var.rds_engine
+  rds_engine_version = var.rds_engine_version
+  rds_instance_class = var.rds_instance_class
 
   rds_allocated_storage     = var.rds_allocated_storage
   rds_max_allocated_storage = var.rds_max_allocated_storage
