@@ -12,15 +12,15 @@ variable "namespace" {
 }
 
 variable "enable_datastore_module" {
+  type        = bool
   description = "Enables the data store module that can provision data storage resources"
   default     = false
-  type        = bool
 }
 
 variable "create_rds_instance" {
+  type        = bool
   description = "Controls if an RDS instance should be provisioned and integrated with the Kubernetes deployment."
   default     = false
-  type        = bool
 }
 
 variable "rds_database_name" {
@@ -64,8 +64,8 @@ variable "rds_monitoring_role_arn" {
 }
 
 variable "rds_enable_performance_insights" {
-  description = "Controls the enabling of RDS Performance insights. Default to `true`"
   type        = bool
+  description = "Controls the enabling of RDS Performance insights. Default to `true`"
   default     = true
 }
 
@@ -75,8 +75,8 @@ variable "rds_subnet_group" {
 }
 
 variable "rds_security_group_ids" {
-  description = "A List of security groups to bind to the rds instance"
   type        = list(string)
+  description = "A List of security groups to bind to the rds instance"
   default     = []
 }
 
@@ -131,14 +131,14 @@ variable "s3_bucket_K8s_worker_iam_role_arn" {
 }
 
 variable "datastore_tags" {
-  description = "Additional tags to add to all datastore resources"
   type        = map(string)
+  description = "Additional tags to add to all datastore resources"
   default     = {}
 }
 
 variable "rds_tags" {
-  description = "Additional tags for the RDS instance"
   type        = map(string)
+  description = "Additional tags for the RDS instance"
   default     = {}
 }
 
