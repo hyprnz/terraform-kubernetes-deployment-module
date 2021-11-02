@@ -1,5 +1,6 @@
 module "service_datastore" {
-  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=1.1.0"
+  # source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=1.1.0"
+  source = "../terraform-aws-data-storage-module"
 
   providers = {
     aws = aws
@@ -33,7 +34,6 @@ module "service_datastore" {
   s3_bucket_name                    = var.s3_bucket_name
   s3_bucket_namespace               = var.s3_bucket_namespace
   s3_enable_versioning              = var.s3_enable_versioning
-  s3_bucket_K8s_worker_iam_role_arn = var.s3_bucket_K8s_worker_iam_role_arn
 
   rds_tags = var.rds_tags
   s3_tags  = var.s3_tags

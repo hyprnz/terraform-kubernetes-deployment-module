@@ -46,5 +46,5 @@ output "datastore_s3_bucket_name" {
 
 output "datastore_s3_bucket_role" {
   description = "The role that has access to the bucket"
-  value       = module.service_datastore.s3_bucket_role_name
+  value       = "" //module.service_datastore.s3_bucket_role_name
 }
