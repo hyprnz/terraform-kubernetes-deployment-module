@@ -6,7 +6,7 @@ output "cluster_config" {
 
 output "k8s_deployment_execution_role_name" {
   description = "The execution role name created for the service"
-  value       = join( "", aws_iam_role.k8s_deployment_execution_role[*].name)
+  value       = join("", aws_iam_role.k8s_deployment_execution_role[*].name)
 }
 
 output "k8s_deployment_execution_role_arn" {

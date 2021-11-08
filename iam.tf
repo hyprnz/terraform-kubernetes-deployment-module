@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "k8s_deployment_assume_role_statement" {
     ]
 
     principals {
-      type = "AWS"
+      type        = "AWS"
       identifiers = [var.eks_trusted_assume_role_arn]
     }
   }
@@ -33,13 +33,13 @@ data "aws_iam_policy_document" "k8s_deployment_assume_role_statement" {
 
 resource "aws_iam_role" "k8s_deployment_execution_role" {
   count = local.count_execution_role
-  name = local.execution_role_name
+  name  = local.execution_role_name
 
   assume_role_policy = data.aws_iam_policy_document.k8s_deployment_assume_role_statement.json
 
   tags = merge(
     {
-      "Name" = local.execution_role_name,
+      "Name"           = local.execution_role_name,
       "K8s deployment" = var.app_name
     },
     var.tags

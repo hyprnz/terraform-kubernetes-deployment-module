@@ -13,8 +13,8 @@ module "example" {
 
   enable_datastore_module = false
 
-  k8s_custom_execution_policy_description = "Custom Policy for example-service-s3-custom-iam k8s deployment"
-  k8s_custom_execution_policy_document_json    = var.k8s_custom_execution_policy_document_json
+  k8s_custom_execution_policy_description   = "Custom Policy for example-service-s3-custom-iam k8s deployment"
+  k8s_custom_execution_policy_document_json = var.k8s_custom_execution_policy_document_json
 }
 
 provider "aws" {
@@ -46,7 +46,7 @@ variable "k8s_deployment_execution_role_name_override" {
 }
 
 variable "k8s_custom_execution_policy_document_json" {
-  type = string
+  type    = string
   default = <<-POLICY
     {
         "Version": "2012-10-17",
