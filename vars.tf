@@ -14,10 +14,34 @@ variable "namespace" {
   default     = "default"
 }
 
-variable "s3_bucket_K8s_worker_iam_role_arn" {
+variable "eks_trusted_assume_role_arn" {
   type        = string
   description = "The arn of the Kubernetes worker role that allows a service to assume the role to access the bucket and options"
   default     = ""
+}
+
+variable "k8s_deployment_execution_role_name_override" {
+  type        = string
+  description = "Allows to override the default Execution Role name of `k8s-{var.app_name}-ExecutionRole`."
+  default     = ""
+}
+
+variable "k8s_custom_execution_policy_document_json" {
+  type        = string
+  description = "A valid policy json string that defines additional actions required by the execution role of the k8s deployment"
+  default     = ""
+}
+
+variable "k8s_custom_execution_policy_description" {
+  type        = string
+  description = "Allows to override the custom k8s deployment policy's description"
+  default     = "The custom policy for the k8s deployment execution role"
+}
+
+variable "tags" {
+  type        = map
+  description = "Additional tags for all resources in the module."
+  default     = {}
 }
 
 // datastore variables ==========================

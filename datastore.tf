@@ -87,9 +87,9 @@ module "service_datastore" {
 
   tags = merge(
     {
-      "Service" = format("%s", var.app_name),
       "K8s deployment" = format("%s", var.app_name)
     },
     var.datastore_tags,
+    var.tags
   )
 }

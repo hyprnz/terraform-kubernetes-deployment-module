@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-service-custom-iam
+  annotations:
+    iam.amazonaws.com/role: k8s-CustomIamPolicy-Stage-ExecutionRole
+spec:
+  containers:
+    - command:
+        - sleep
+        - "3600"
+      image: amazon/aws-cli:latest
+      name: aws
+      resources:
+        limits:
+          cpu: "100m"
+          memory: "200Mi"
+  restartPolicy: "Never"
