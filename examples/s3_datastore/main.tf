@@ -42,7 +42,7 @@ variable "eks_trusted_assume_role_arn" {
 
 variable "k8s_deployment_execution_role_name_override" {
   type    = string
-  default = "k8s-OverrideName-Stage-ExecutionRole"
+  default = "k8s-s3-Stage-ExecutionRole"
 }
 
 variable "region" {
@@ -50,17 +50,17 @@ variable "region" {
 }
 
 output "bucket_name" {
-  value = "${module.example.datastore_s3_bucket_name}"
+  value = module.example.datastore_s3_bucket_name
 }
 
 output "bucket_policy_arn" {
-  value = "${module.example.datastore_s3_bucket_policy_arn}"
+  value = module.example.datastore_s3_bucket_policy_arn
 }
 
 output "k8s_deployment_executon_role_name" {
-  value = "${module.example.k8s_deployment_execution_role_name}"
+  value = module.example.k8s_deployment_execution_role_name
 }
 
 output "k8s_deployment_executon_role_arn" {
-  value = "${module.example.k8s_deployment_execution_role_arn}"
+  value = module.example.k8s_deployment_execution_role_arn
 }

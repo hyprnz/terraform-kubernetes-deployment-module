@@ -2,6 +2,8 @@
 
 This module helps manage interoperability between the Kubernetes & AWS abstractions. The module does not create any Kubernetes Deployments, Pods, Services (these should be managed outside this module for now). The module does support adding the following AWS resources to integrate with your Kubernetes DeploymentSet.
 
+This module supports Terraform `0.13.0` (with backwards compatibility for Terraform `0.12.31`)
+
 * [RDS (Postgres/MySQL)](#rds)
 * [S3](#s3-bucket)
 * [Dynamodb](#dynamodb-table)
@@ -9,6 +11,8 @@ This module helps manage interoperability between the Kubernetes & AWS abstracti
 
 ## Datastores
 Datastores store data in which the owning service is the only means of access. This module creates the associated Execution Role with the required policy to access the s3 & dynamodb datastores (RDS access is managed by user/password credentials). The module can accept multiple different datastore options but can only create one of each datastore type.
+
+This module is dependent on the [Terraform-aws-datastorage-module](https://github.com/hyprnz/terraform-aws-data-storage-module).
 
 ### RDS
 RDS datastores support both Postgres and MySQL engines and provide many configuration options (see below). The module requires a security group id that defines the access policies within the VPC. Orchestration of the security groups between the k8s worker node and provided security group is not supported by the module.
@@ -69,6 +73,12 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | aws | >= 3.38.0 |
 | kubernetes | >= 2.0 |
 
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| service_datastore | git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=3.0.0 |  |
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -103,17 +113,17 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | dynamodb_tags | Additional tags (e.g map(`BusinessUnit`,`XYX`) | `map` | `{}` | no |
 | dynamodb_ttl_attribute | DynamoDB table ttl attribute | `string` | `"Expires"` | no |
 | dynamodb_ttl_enabled | Whether ttl is enabled or disabled | `bool` | `true` | no |
-| eks_trusted_assume_role_arn | The arn of the Kubernetes worker role that allows a service to assume the role to access the bucket and options | `string` | `""` | no |
+| eks_trusted_assume_role_arn | The arn of the Kubernetes worker IAM role that is configured to allow assuming the service execution role. | `string` | `""` | no |
 | enable_datastore_module | Enables the data store module that will provision data storage resources | `bool` | `true` | no |
 | k8s_custom_execution_policy_description | Allows to override the custom k8s deployment policy's description | `string` | `"The custom policy for the k8s deployment execution role"` | no |
 | k8s_custom_execution_policy_document_json | A valid policy json string that defines additional actions required by the execution role of the k8s deployment | `string` | `""` | no |
 | k8s_deployment_execution_role_name_override | Allows to override the default Execution Role name of `k8s-{var.app_name}-ExecutionRole`. | `string` | `""` | no |
 | namespace | The namespace of the Kubernetes resources | `string` | `"default"` | no |
-| rds_allocated_storage | Amount of storage allocated to RDS instance | `number` | `10` | no |
+| rds_allocated_storage | Amount of storage allocated to RDS instance | `number` | `100` | no |
 | rds_apply_immediately | Specifies whether any database modifications are applied immediately, or during the next maintenance window. Defaults to `false`. | `bool` | `false` | no |
 | rds_auto_minor_version_upgrade | Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Defaults to `true`. | `bool` | `true` | no |
 | rds_backup_window | The daily time range (in UTC) during which automated backups are created if they are enabled. Example: '09:46-10:16'. Must not overlap with maintenance_window | `string` | `"16:19-16:49"` | no |
-| rds_database_name | Name of the database | `string` | `""` | no |
+| rds_database_name | The name of the database. Can only contain alphanumeric characters | `string` | `""` | no |
 | rds_enable_deletion_protection | If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to `true`. The default is `false`. | `bool` | `false` | no |
 | rds_enable_performance_insights | Controls the enabling of RDS Performance insights. Default to `true` | `bool` | `true` | no |
 | rds_enable_storage_encryption | Specifies whether the DB instance is encrypted | `bool` | `false` | no |
@@ -123,7 +133,7 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | rds_identifier | Identifier of datastore instance | `string` | `""` | no |
 | rds_instance_class | The instance type to use | `string` | `"db.t3.small"` | no |
 | rds_iops | The amount of provisioned IOPS. Setting this implies a storage_type of 'io1' | `number` | `0` | no |
-| rds_max_allocated_storage | The upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to `allocated_storage`. Must be greater than or equal to `allocated_storage` or `0` to disable Storage Autoscaling. | `number` | `0` | no |
+| rds_max_allocated_storage | The upper limit to which Amazon RDS can automatically scale the storage of the DB instance. Configuring this will automatically ignore differences to `allocated_storage`. Must be greater than or equal to `allocated_storage` or `0` to disable Storage Autoscaling. | `number` | `200` | no |
 | rds_monitoring_interval | The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60. | `number` | `0` | no |
 | rds_monitoring_role_arn | The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs. Must be specified if monitoring_interval is non-zero. | `string` | `""` | no |
 | rds_multi_az | Specifies if the RDS instance is multi-AZ. | `bool` | `false` | no |
@@ -135,8 +145,7 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | rds_subnet_group | Subnet group for RDS instances | `string` | `""` | no |
 | rds_tags | Additional tags for rds datastore resources | `map` | `{}` | no |
 | rds_username | RDS database user name | `string` | `""` | no |
-| s3_bucket_name | The name of the bucket | `string` | `""` | no |
-| s3_bucket_namespace | The namespace of the bucket - intention is to help avoid naming collisions | `string` | `""` | no |
+| s3_bucket_name | The name of the bucket. It is recommended to add a namespace/suffix to the name to avoid naming collisions | `string` | `""` | no |
 | s3_enable_versioning | If versioning should be configured on the bucket | `bool` | `true` | no |
 | s3_tags | Additional tags to be added to the s3 resources | `map` | `{}` | no |
 | tags | Additional tags for all resources in the module. | `map` | `{}` | no |
@@ -158,7 +167,7 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | datastore_rds_db_name | The RDS database name |
 | datastore_rds_db_url | The RDS connection url in the format of `engine`://`user`:`password`@`endpoint`/`db_name` |
 | datastore_rds_db_url_encoded | The RDS connection url in the format of `engine`://`user`:`urlencode(password)`@`endpoint`/`db_name` |
-| datastore_rds_db_user | The RDS instance ID |
+| datastore_rds_db_user | The RDS db username |
 | datastore_rds_engine_version | The actual engine version used by the RDS instance. |
 | datastore_rds_instance_address | The address of the RDS instance |
 | datastore_rds_instance_arn | The ARN of the RDS instance |
@@ -166,6 +175,7 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | datastore_rds_instance_id | The RDS instance ID |
 | datastore_s3_bucket_name | The name of the s3 bucket |
 | datastore_s3_bucket_policy_arn | Policy arn to be attached to the execution role that provide access to the datastore s3 bucket. |
+| k8s_deployment_custom_policy_arn | The custom policy arn created for the service which is attached to the execution role. |
 | k8s_deployment_execution_role_arn | The execution role arn created for the service |
 | k8s_deployment_execution_role_name | The execution role name created for the service |
 

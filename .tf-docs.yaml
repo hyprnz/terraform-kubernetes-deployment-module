@@ -14,6 +14,7 @@ sections:
     - requirements
     - inputs
     - providers
+    - modules
     - outputs
     - footer
 

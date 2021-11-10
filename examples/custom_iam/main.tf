@@ -68,9 +68,9 @@ variable "region" {
 }
 
 output "k8s_deployment_executon_role_name" {
-  value = "${module.example.k8s_deployment_execution_role_name}"
+  value = module.example.k8s_deployment_execution_role_name
 }
 
 output "k8s_deployment_executon_role_arn" {
-  value = "${module.example.k8s_deployment_execution_role_arn}"
+  value = module.example.k8s_deployment_execution_role_arn
 }

@@ -14,6 +14,11 @@ output "k8s_deployment_execution_role_arn" {
   value       = join("", aws_iam_role.k8s_deployment_execution_role[*].arn)
 }
 
+output "k8s_deployment_custom_policy_arn" {
+  description = "The custom policy arn created for the service which is attached to the execution role."
+  value       = join("", aws_iam_policy.k8s_custom_execution_policy[*].arn)
+}
+
 output "datastore_rds_instance_address" {
   description = "The address of the RDS instance"
   value       = module.service_datastore.rds_instance_address
@@ -35,7 +40,7 @@ output "datastore_rds_instance_id" {
 }
 
 output "datastore_rds_db_user" {
-  description = "The RDS instance ID"
+  description = "The RDS db username"
   value       = module.service_datastore.rds_db_user
 }
 
@@ -61,7 +66,7 @@ output "datastore_rds_engine_version" {
 
 output "datastore_s3_bucket_name" {
   description = "The name of the s3 bucket"
-  value       = module.service_datastore.s3_bucket
+  value       = module.service_datastore.s3_bucket_name
 }
 
 output "datastore_s3_bucket_policy_arn" {

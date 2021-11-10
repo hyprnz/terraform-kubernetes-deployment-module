@@ -1,6 +1,5 @@
 module "service_datastore" {
-  # source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=1.1.0"
-  source = "../terraform-aws-data-storage-module"
+  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=3.0.0"
 
   providers = {
     aws = aws
@@ -50,7 +49,6 @@ module "service_datastore" {
   rds_enable_deletion_protection = var.rds_enable_deletion_protection
 
   s3_bucket_name       = var.s3_bucket_name
-  s3_bucket_namespace  = var.s3_bucket_namespace
   s3_enable_versioning = var.s3_enable_versioning
 
   dynamodb_table_name                    = var.dynamodb_table_name
