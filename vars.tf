@@ -44,7 +44,7 @@ variable "tags" {
   default     = {}
 }
 
-// datastore variables ==========================
+# datastore variables ==========================
 
 variable "enable_datastore_module" {
   type        = bool
@@ -83,7 +83,7 @@ variable "datastore_tags" {
   default     = {}
 }
 
-// RDS variables ================================
+# RDS variables ================================
 
 variable "rds_tags" {
   type        = map
@@ -267,7 +267,7 @@ variable "s3_enable_versioning" {
   default     = true
 }
 
-// Dynamodb variables ===========================
+# Dynamodb variables ===========================
 
 variable "dynamodb_tags" {
   type        = map
