@@ -11,11 +11,12 @@ resource "kubernetes_secret" "db" {
   }
 
   data = {
-    username = module.service_datastore.rds_db_user
-    password = var.rds_password
-    dbname   = module.service_datastore.rds_db_name
-    endpoint = module.service_datastore.rds_instance_endpoint
-    url      = module.service_datastore.rds_db_url
+    username    = module.service_datastore.rds_db_user
+    password    = var.rds_password
+    dbname      = module.service_datastore.rds_db_name
+    endpoint    = module.service_datastore.rds_instance_endpoint
+    url         = module.service_datastore.rds_db_url
+    url_encoded = module.service_datastore.rds_db_url_encoded
   }
 
   type = "Opaque"
