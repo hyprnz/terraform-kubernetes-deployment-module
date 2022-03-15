@@ -2,12 +2,34 @@
 
 This module helps manage interoperability between the Kubernetes & AWS abstractions. The module does not create any Kubernetes Deployments, Pods, Services (these should be managed outside this module for now). The module does support adding the following AWS resources to integrate with your Kubernetes DeploymentSet.
 
-This module supports Terraform `0.13.0` (with backwards compatibility for Terraform `0.12.31`)
-
-* [RDS (Postgres/MySQL)](#rds)
-* [S3](#s3-bucket)
-* [Dynamodb](#dynamodb-table)
+## TOC
+* [Release Notes](#release-notes)
+* [Tooling requirements](#tooling-requirements)
+* [Datastores](#datastores)
+  * [RDS (Postgres/MySQL)](#rds)
+  * [S3](#s3-bucket)
+  * [Dynamodb](#dynamodb-table)
 * [Custom Execution Role & Policy](#custom-execution-policy)
+  * [Assuming Roles in Kubernetes](#assuming-roles-in-kubernetes)
+* [Examples](#examples)
+* [Terraform Docs](#terraform-docs)
+  * [Requirements](#Requirements)
+  * [Providers](#Providers)
+  * [Inputs](#inputs)
+  * [Outputs](#outputs)
+* [License](#license)
+
+## Release notes
+
+See the [Releases](https://github.com/hyprnz/terraform-kubernetes-deployment-module/releases) page for the complete list.
+
+* [__4.0.1__](https://github.com/hyprnz/terraform-kubernetes-deployment-module/releases/tag/4.0.1) - Adds support for [data storage module v3.0.1](https://github.com/hyprnz/terraform-aws-data-storage-module/releases/tag/3.0.1). Includes support for more RDS parameters including IAM authentication, RDS Parameter Groups, and CloudWatch log exports.
+* [__4.0.0__](https://github.com/hyprnz/terraform-kubernetes-deployment-module/releases/tag/4.0.0) - Updates the module to support Terraform 0.13 (with backwards compatibility to 0.12.31). Refactor of Execution Role and updates to datastores.
+
+### Notes
+Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or maintained. The branch will be deleted in the near future.
+## Tooling requirements
+This module supports Terraform `0.13.0` (with backwards compatibility for Terraform `0.12.31`)
 
 ## Datastores
 Datastores store data in which the owning service is the only means of access. This module creates the associated Execution Role with the required policy to access the s3 & dynamodb datastores (RDS access is managed by user/password credentials). The module can accept multiple different datastore options but can only create one of each datastore type.
@@ -53,9 +75,7 @@ The following examples have been provided
 
 The examples do require access to an eks-cluster via the `eks_cluster_name` variable. The examples do not provision any EKS cluster for running the examples. the also require the `eks_trusted_assume_role_arn` variable to allow the worker node to assume the execution role.
 
-## Notes
-Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or maintained. The branch will be deleted in the near future.
-
+# Terraform Docs
 ---
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -63,21 +83,21 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12.31 |
-| aws | >= 3.38.0 |
+| aws | >= 3.38.0, < 4.0.0 |
 | kubernetes | >= 2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.38.0 |
+| aws | >= 3.38.0, < 4.0.0 |
 | kubernetes | >= 2.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| service_datastore | git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=3.0.0 |  |
+| service_datastore | git::git@github.com:hyprnz/terraform-aws-data-storage-module | 3.0.1 |
 
 ## Inputs
 
@@ -123,6 +143,7 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | rds_apply_immediately | Specifies whether any database modifications are applied immediately, or during the next maintenance window. Defaults to `false`. | `bool` | `false` | no |
 | rds_auto_minor_version_upgrade | Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window. Defaults to `true`. | `bool` | `true` | no |
 | rds_backup_window | The daily time range (in UTC) during which automated backups are created if they are enabled. Example: '09:46-10:16'. Must not overlap with maintenance_window | `string` | `"16:19-16:49"` | no |
+| rds_cloudwatch_logs_exports | Which RDS logs should be sent to CloudWatch. The default is `postgresql` and `upgrade`. | `set(string)` | <pre>[<br>  "postgresql",<br>  "upgrade"<br>]</pre> | no |
 | rds_database_name | The name of the database. Can only contain alphanumeric characters | `string` | `""` | no |
 | rds_enable_deletion_protection | If the DB instance should have deletion protection enabled. The database can't be deleted when this value is set to `true`. The default is `false`. | `bool` | `false` | no |
 | rds_enable_performance_insights | Controls the enabling of RDS Performance insights. Default to `true` | `bool` | `true` | no |
@@ -130,6 +151,7 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | rds_engine | The Database engine for the rds instance | `string` | `"postgres"` | no |
 | rds_engine_version | The version of the database engine. | `string` | `"11"` | no |
 | rds_final_snapshot_identifier | The name of your final DB snapshot when this DB instance is deleted. Must be provided if `rds_skip_final_snapshot` is set to false. The value must begin with a letter, only contain alphanumeric characters and hyphens, and not end with a hyphen or contain two consecutive hyphens. | `string` | `null` | no |
+| rds_iam_authentication_enabled | Controls whether you can use IAM users to log in to the RDS database. The default is `false` | `bool` | `false` | no |
 | rds_identifier | Identifier of datastore instance | `string` | `""` | no |
 | rds_instance_class | The instance type to use | `string` | `"db.t3.small"` | no |
 | rds_iops | The amount of provisioned IOPS. Setting this implies a storage_type of 'io1' | `number` | `0` | no |
@@ -138,6 +160,9 @@ Branch `0.11` is compatible with `Terraform 0.11` but is no longer supported or 
 | rds_monitoring_role_arn | The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs. Must be specified if monitoring_interval is non-zero. | `string` | `""` | no |
 | rds_multi_az | Specifies if the RDS instance is multi-AZ. | `bool` | `false` | no |
 | rds_option_group_name | Name of the DB option group to associate | `string` | `null` | no |
+| rds_parameter_group_family | Name of the DB family (engine & version) for the parameter group. eg. postgres11 | `string` | `null` | no |
+| rds_parameter_group_name | Name of the DB parameter group to create and associate with the instance | `string` | `null` | no |
+| rds_parameter_group_parameters | Key value pairs of parameters that will be added to this database's parameter group. Requires `rds_parameter_group_name` and `rds_parameter_group_family` to be set as well. Default is empty and the AWS default parameter group is used. | `map` | `{}` | no |
 | rds_password | RDS database password for the user | `string` | `""` | no |
 | rds_security_group_ids | A List of security groups to bind to the rds instance | `list(string)` | `[]` | no |
 | rds_skip_final_snapshot | Determines whether a final DB snapshot is created before the DB instance is deleted. If true is specified, no DBSnapshot is created. If false is specified, a DB snapshot is created before the DB instance is deleted, using the value from final_snapshot_identifier | `bool` | `true` | no |

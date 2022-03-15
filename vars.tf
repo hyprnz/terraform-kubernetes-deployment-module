@@ -247,6 +247,36 @@ variable "rds_enable_deletion_protection" {
   default     = false
 }
 
+variable "rds_parameter_group_name" {
+  type        = string
+  description = "Name of the DB parameter group to create and associate with the instance"
+  default     = null
+}
+
+variable "rds_parameter_group_family" {
+  type        = string
+  description = "Name of the DB family (engine & version) for the parameter group. eg. postgres11"
+  default     = null
+}
+
+variable "rds_parameter_group_parameters" {
+  type        = map
+  description = "Key value pairs of parameters that will be added to this database's parameter group. Requires `rds_parameter_group_name` and `rds_parameter_group_family` to be set as well. Default is empty and the AWS default parameter group is used."
+  default     = {}
+}
+
+variable "rds_cloudwatch_logs_exports" {
+  type        = set(string)
+  description = "Which RDS logs should be sent to CloudWatch. The default is `postgresql` and `upgrade`."
+  default     = ["postgresql", "upgrade"]
+}
+
+variable "rds_iam_authentication_enabled" {
+  type        = bool
+  description = "Controls whether you can use IAM users to log in to the RDS database. The default is `false`"
+  default     = false
+}
+
 // s3 variables =================================
 
 variable "s3_tags" {

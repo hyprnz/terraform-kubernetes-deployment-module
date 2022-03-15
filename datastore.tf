@@ -1,5 +1,5 @@
 module "service_datastore" {
-  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=3.0.0"
+  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=3.0.1"
 
   providers = {
     aws = aws
@@ -28,13 +28,17 @@ module "service_datastore" {
   rds_max_allocated_storage = var.rds_max_allocated_storage
   rds_iops                  = var.rds_iops
 
-  backup_retention_period = var.backup_retention_period
-  rds_option_group_name   = var.rds_option_group_name
-  rds_multi_az            = var.rds_multi_az
+  backup_retention_period        = var.backup_retention_period
+  rds_option_group_name          = var.rds_option_group_name
+  rds_parameter_group_name       = var.rds_parameter_group_name
+  rds_parameter_group_family     = var.rds_parameter_group_family
+  rds_parameter_group_parameters = var.rds_parameter_group_parameters
+  rds_multi_az                   = var.rds_multi_az
 
   rds_monitoring_interval         = var.rds_monitoring_interval
   rds_monitoring_role_arn         = var.rds_monitoring_role_arn
   rds_enable_performance_insights = var.rds_enable_performance_insights
+  rds_cloudwatch_logs_exports     = var.rds_cloudwatch_logs_exports
 
   rds_backup_window             = var.rds_backup_window
   rds_skip_final_snapshot       = var.rds_skip_final_snapshot
@@ -45,6 +49,8 @@ module "service_datastore" {
 
   rds_username = var.rds_username
   rds_password = var.rds_password
+
+  rds_iam_authentication_enabled = var.rds_iam_authentication_enabled
 
   rds_enable_deletion_protection = var.rds_enable_deletion_protection
 
