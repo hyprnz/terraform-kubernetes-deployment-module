@@ -1,5 +1,5 @@
 module "service_datastore" {
-  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=3.0.1"
+  source = "git::git@github.com:hyprnz/terraform-aws-data-storage-module?ref=3.1.0"
 
   providers = {
     aws = aws

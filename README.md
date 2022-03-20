@@ -97,7 +97,7 @@ The examples do require access to an eks-cluster via the `eks_cluster_name` vari
 
 | Name | Source | Version |
 |------|--------|---------|
-| service_datastore | git::git@github.com:hyprnz/terraform-aws-data-storage-module | 3.0.1 |
+| service_datastore | git::git@github.com:hyprnz/terraform-aws-data-storage-module | 3.1.0 |
 
 ## Inputs
 
